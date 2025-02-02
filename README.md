@@ -60,22 +60,16 @@
 <h2>🚀 How to Run the Project</h2>
 
 <h3>1️⃣ Clone the Repository</h3>
-<pre><code>git clone https://github.com/your-username/cognilearn.git
-cd cognilearn
+<pre><code>git clone https://github.com/sohamyedgaonkar/Team_MindMesh_AmdocsGenAI.git
+cd Team_MindMesh_AmdocsGenAI
 </code></pre>
 
 <h3>2️⃣ Install Dependencies</h3>
 
 <h4>Frontend</h4>
-<pre><code>cd frontend
-npm install
+<pre><code>cd Frontend
+npm i
 npm run dev
-</code></pre>
-
-<h3>3️⃣ Run the AI Backend (Python)</h3>
-<pre><code>cd ai-backend
-pip install -r requirements.txt
-uvicorn main:app --reload
 </code></pre>
 
 <hr>
