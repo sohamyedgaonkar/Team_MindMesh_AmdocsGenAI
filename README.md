@@ -14,9 +14,7 @@
 <h2>🎥 Live Demonstration</h2>
 <p>Watch the full demo on YouTube:</p>
 <p>
-    <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">
-        <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg" alt="YouTube Demo" width="600">
-    </a>
+    <a href="https://www.youtube.com/watch?v=g95UoafGhlw" alt="YouTube">📹 Watch Now</a>
 </p>
 
 <hr>
