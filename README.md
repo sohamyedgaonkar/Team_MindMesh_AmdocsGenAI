@@ -30,7 +30,9 @@
 </ul>
 
 <p align="center">
-    <img src="images/Features.png" alt="CogniLearn Dashboard" width="800">
+    <p>Features</p>
+    <img src="images/Features.png" alt="CogniLearn Features" width="800">
+    <p>Dashboard</p>
     <img src="images/Dashboard.png" alt="CogniLearn Dashboard" width="800">
 </p>
 
@@ -87,7 +89,6 @@ npm run dev
 
 <h2>📌 Future Enhancements</h2>
 <ul>
-    <li>🚀 <strong>AI-based Learning Paths</strong> – Smart curriculum structuring.</li>
     <li>🏅 <strong>Gamification Features</strong> – Achievements, badges, and leaderboards.</li>
 </ul>
 
