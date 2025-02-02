@@ -1,7 +1,7 @@
 <h1 align="center">🚀 CogniLearn - Adaptive Learning Platform</h1>
 
 <p align="center">
-    <img src="https://your-image-url.com/banner.png" alt="CogniLearn Home" width="800">
+    <img src="images/image1.png" alt="CogniLearn Home" width="800">
 </p>
 
 <p align="center">
@@ -30,7 +30,8 @@
 </ul>
 
 <p align="center">
-    <img src="https://your-image-url.com/dashboard.png" alt="CogniLearn Dashboard" width="800">
+    <img src="images/Features.png" alt="CogniLearn Dashboard" width="800">
+    <img src="images/Dashboard.png" alt="CogniLearn Dashboard" width="800">
 </p>
 
 <hr>
