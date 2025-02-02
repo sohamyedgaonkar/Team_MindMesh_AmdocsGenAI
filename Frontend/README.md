@@ -1,5 +1,5 @@
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Step 1: Clone the repository using the command.
 git clone https://github.com/sohamyedgaonkar/Team_MindMesh_AmdocsGenAI
 
 # Step 2: Navigate to the project directory.
