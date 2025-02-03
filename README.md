@@ -79,10 +79,7 @@ cd Team_MindMesh_AmdocsGenAI
 </code></pre>
 
 <h3>2️⃣ Install Dependencies</h3>
-
-<h4>Frontend</h4>
-<pre><code>cd Frontend
-npm i
+<pre><code>npm i
 npm run dev
 </code></pre>
 
