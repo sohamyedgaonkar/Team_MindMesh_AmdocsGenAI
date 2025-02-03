@@ -11,10 +11,17 @@
 
 <hr>
 
-<h2>🎥 Live Demonstration</h2>
+<h2>🎥Video Explanation</h2>
 <p>Watch the full demo on YouTube:</p>
 <p>
     <a href="https://www.youtube.com/watch?v=g95UoafGhlw" alt="YouTube">📹 Watch Now</a>
+</p>
+
+
+<h2>🎥Demonstration</h2>
+<p>For Demonstration of Project:</p>
+<p>
+    <a href="https://mindmesh-pathway.lovable.app/" alt="Demo">📹 Demo</a>
 </p>
 
 <hr>
@@ -34,6 +41,10 @@
     <img src="images/Features.png" alt="CogniLearn Features" width="800">
     <p>Dashboard</p>
     <img src="images/Dashboard.png" alt="CogniLearn Dashboard" width="800">
+    <p>Course Recommendation System</p>
+    <img src="images/Course.png" alt="CogniLearn Dashboard" width="800">
+    <p>Quiz Section</p>
+    <img src="images/Quiz.png" alt="CogniLearn Dashboard" width="800">
 </p>
 
 <hr>
