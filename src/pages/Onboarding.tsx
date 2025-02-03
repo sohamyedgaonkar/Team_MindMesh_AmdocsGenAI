@@ -49,20 +49,18 @@ const Onboarding = () => {
     try {
       if (!session?.user) throw new Error("No user found");
 
-      // Save onboarding responses
+      // Save onboarding responses with explicit user_id
       const { error: responseError } = await supabase
         .from("onboarding_responses")
-        .insert([
-          {
-            user_id: session.user.id,
-            learning_goals: answers.learning_goals || [],
-            domain_interests: answers.domain_interests || [],
-            learning_style: answers.learning_style || [],
-            daily_time: answers.daily_time || "",
-            specific_goals: answers.specific_goals || "",
-            completed_at: new Date().toISOString(),
-          },
-        ]);
+        .insert({
+          user_id: session.user.id,
+          learning_goals: answers.learning_goals || [],
+          programming_interests: answers.programming_interests || [],
+          learning_style: answers.learning_style || [],
+          daily_time: answers.daily_time || "",
+          experience_level: answers.experience_level || "",
+          completed_at: new Date().toISOString(),
+        });
 
       if (responseError) throw responseError;
 
@@ -82,7 +80,7 @@ const Onboarding = () => {
         description: "Your preferences have been saved. Welcome to CogniLearn!",
       });
 
-      // Redirect to dashboard after successful completion
+      // Immediately redirect to dashboard after successful completion
       navigate("/dashboard");
     } catch (error: any) {
       console.error("Onboarding error:", error);

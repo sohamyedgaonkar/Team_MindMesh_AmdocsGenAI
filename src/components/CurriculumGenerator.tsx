@@ -9,8 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Loader2 } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Module {
@@ -18,7 +24,14 @@ interface Module {
   description: string;
   topicsCovered: string[];
   difficultyLevel: "Beginner" | "Intermediate" | "Advanced";
-  videoUrl?: string; // Added YouTube video URL property
+  videoUrl?: string;
+}
+
+interface PythonSection {
+  id: number;
+  title: string;
+  description: string;
+  isCompleted: boolean;
 }
 
 const staticCurriculum: { [key: string]: { [key: string]: { [key: string]: Module[] } } } = {
@@ -30,7 +43,7 @@ const staticCurriculum: { [key: string]: { [key: string]: { [key: string]: Modul
           description: "Learn the basics of Python programming.",
           topicsCovered: ["Syntax", "Variables", "Data Types", "Control Flow"],
           difficultyLevel: "Beginner",
-          videoUrl: "https://www.youtube.com/embed/eWRfhZUzrAc", // YouTube video embedded
+          videoUrl: "https://www.youtube.com/embed/eWRfhZUzrAc",
         },
         {
           name: "Functions & Loops",
@@ -61,31 +74,69 @@ const staticCurriculum: { [key: string]: { [key: string]: { [key: string]: Modul
   },
 };
 
+const pythonSections: PythonSection[] = [
+  {
+    id: 1,
+    title: "Introduction to Python",
+    description: "Learn the basics of Python programming language and its ecosystem.",
+    isCompleted: false,
+  },
+  {
+    id: 2,
+    title: "Basics of Python",
+    description: "Master fundamental concepts like variables, data types, and control structures.",
+    isCompleted: false,
+  },
+  {
+    id: 3,
+    title: "OOP Concepts in Python",
+    description: "Understand object-oriented programming principles in Python.",
+    isCompleted: false,
+  },
+  {
+    id: 4,
+    title: "Advanced Concepts in Python",
+    description: "Explore advanced topics like decorators, generators, and metaclasses.",
+    isCompleted: false,
+  },
+];
+
 const CurriculumGenerator = () => {
   const [subject, setSubject] = useState("");
   const [courseType, setCourseType] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [curriculum, setCurriculum] = useState<Module[]>([]);
+  const [showPythonModal, setShowPythonModal] = useState(false);
+  const [sections, setSections] = useState<PythonSection[]>(pythonSections);
   const { toast } = useToast();
 
-  const generateCurriculum = async () => {
-    if (!subject.trim() || !courseType || !difficulty) {
-      toast({
-        title: "Error",
-        description: "Please enter all details (subject, course type, difficulty)",
-        variant: "destructive",
-      });
+  const handleSectionComplete = (sectionId: number) => {
+    setSections((prevSections) =>
+      prevSections.map((section) =>
+        section.id === sectionId
+          ? { ...section, isCompleted: true }
+          : section
+      )
+    );
+    toast({
+      title: "Quiz Completed",
+      description: "You've completed this section's quiz!",
+    });
+  };
+
+  const handleDifficultySelection = async (selectedDifficulty: string) => {
+    if (subject.toLowerCase() === "python" && selectedDifficulty === "Beginner") {
+      setShowPythonModal(true);
       return;
     }
-
-    const normalizedSubject = subject.trim();
+    
     if (
-      staticCurriculum[normalizedSubject] &&
-      staticCurriculum[normalizedSubject][courseType] &&
-      staticCurriculum[normalizedSubject][courseType][difficulty]
+      staticCurriculum[subject] &&
+      staticCurriculum[subject][courseType] &&
+      staticCurriculum[subject][courseType][selectedDifficulty]
     ) {
-      setCurriculum(staticCurriculum[normalizedSubject][courseType][difficulty]);
+      setCurriculum(staticCurriculum[subject][courseType][selectedDifficulty]);
       toast({
         title: "Success",
         description: "Static curriculum loaded successfully!",
@@ -115,6 +166,17 @@ const CurriculumGenerator = () => {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const generateCurriculum = async () => {
+    if (!subject.trim() || !courseType || !difficulty) {
+      toast({
+        title: "Error",
+        description: "Please enter all details (subject, course type, difficulty)",
+        variant: "destructive",
+      });
+      return;
     }
   };
 
@@ -201,6 +263,38 @@ const CurriculumGenerator = () => {
           ))}
         </div>
       )}
+
+      <Dialog open={showPythonModal} onOpenChange={setShowPythonModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold mb-4">Python Course Curriculum</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            {sections.map((section) => (
+              <div
+                key={section.id}
+                className={`p-6 rounded-lg transition-colors duration-300 ${
+                  section.isCompleted ? "bg-green-100" : "bg-white"
+                } border hover:border-primary`}
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold">{section.title}</h3>
+                    <p className="text-muted-foreground mt-1">{section.description}</p>
+                  </div>
+                  <Button
+                    onClick={() => handleSectionComplete(section.id)}
+                    className="ml-4 transition-transform hover:scale-105"
+                    variant={section.isCompleted ? "secondary" : "default"}
+                  >
+                    {section.isCompleted ? "Completed" : "Take Quiz"}
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

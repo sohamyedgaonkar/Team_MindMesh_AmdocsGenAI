@@ -11,47 +11,50 @@ const questions = [
   {
     question: "What are your primary learning goals?",
     options: [
-      "Improving skills",
-      "Preparing for exams",
-      "Exploring a new field",
+      "Improving technical skills",
+      "Career advancement",
       "Personal growth",
+      "Academic success",
     ],
     key: "learning_goals",
   },
   {
-    question: "Which domain are you most interested in?",
+    question: "Which programming languages interest you the most?",
     options: [
-      "Technical: Coding",
-      "Technical: AI/ML",
-      "Technical: Cybersecurity",
-      "Non-Technical: Marketing",
-      "Non-Technical: Content Writing",
-      "Non-Technical: Management",
-      "Non-Technical: Design",
+      "Python",
+      "JavaScript",
+      "Java",
+      "C++",
+      "Other",
     ],
-    key: "domain_interests",
+    key: "programming_interests",
   },
   {
     question: "What is your preferred learning style?",
     options: [
       "Video tutorials",
-      "Interactive quizzes",
-      "Reading",
-      "Peer-to-peer learning",
+      "Interactive coding",
+      "Reading documentation",
+      "Project-based learning",
     ],
     key: "learning_style",
   },
   {
     question: "How much time can you dedicate to learning daily?",
-    options: ["Less than 30 minutes", "1 hour", "2+ hours"],
+    options: ["Less than 1 hour", "1-2 hours", "2-4 hours", "4+ hours"],
     key: "daily_time",
     singleSelect: true,
   },
   {
-    question: "Are you preparing for any specific certification, exam, or career goal?",
-    key: "specific_goals",
-    isOptional: true,
-    isText: true,
+    question: "What is your current experience level in programming?",
+    options: [
+      "Complete beginner",
+      "Some basic knowledge",
+      "Intermediate",
+      "Advanced",
+    ],
+    key: "experience_level",
+    singleSelect: true,
   },
 ];
 
@@ -64,18 +67,13 @@ export const OnboardingQuestions = ({ onSubmit }: OnboardingQuestionsProps) => {
     const currentKey = questions[currentQuestion].key;
     if (questions[currentQuestion].singleSelect) {
       setAnswers({ ...answers, [currentKey]: option });
-    } else if (!questions[currentQuestion].isText) {
+    } else {
       const currentAnswers = answers[currentKey] || [];
       const updatedAnswers = currentAnswers.includes(option)
         ? currentAnswers.filter((a: string) => a !== option)
         : [...currentAnswers, option];
       setAnswers({ ...answers, [currentKey]: updatedAnswers });
     }
-  };
-
-  const handleTextInput = (value: string) => {
-    const currentKey = questions[currentQuestion].key;
-    setAnswers({ ...answers, [currentKey]: value });
   };
 
   const handleSubmit = async () => {
@@ -108,35 +106,25 @@ export const OnboardingQuestions = ({ onSubmit }: OnboardingQuestionsProps) => {
       </div>
 
       <div className="space-y-4">
-        {currentQ.isText ? (
-          <textarea
-            className="w-full p-4 rounded-lg bg-background border focus:ring-2 focus:ring-primary"
-            rows={4}
-            placeholder="Enter your answer (optional)"
-            value={answers[currentQ.key] || ""}
-            onChange={(e) => handleTextInput(e.target.value)}
-          />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {currentQ.options.map((option) => (
-              <div
-                key={option}
-                className="flex items-center space-x-3 p-4 rounded-lg border hover:bg-accent/50 cursor-pointer"
-                onClick={() => handleOptionToggle(option)}
-              >
-                <Checkbox
-                  checked={
-                    currentQ.singleSelect
-                      ? answers[currentQ.key] === option
-                      : (answers[currentQ.key] || []).includes(option)
-                  }
-                  onCheckedChange={() => handleOptionToggle(option)}
-                />
-                <span>{option}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {currentQ.options.map((option) => (
+            <div
+              key={option}
+              className="flex items-center space-x-3 p-4 rounded-lg border hover:bg-accent/50 cursor-pointer"
+              onClick={() => handleOptionToggle(option)}
+            >
+              <Checkbox
+                checked={
+                  currentQ.singleSelect
+                    ? answers[currentQ.key] === option
+                    : (answers[currentQ.key] || []).includes(option)
+                }
+                onCheckedChange={() => handleOptionToggle(option)}
+              />
+              <span>{option}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="flex justify-between pt-4">

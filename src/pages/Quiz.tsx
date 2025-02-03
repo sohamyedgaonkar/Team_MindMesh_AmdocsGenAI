@@ -21,20 +21,81 @@ interface Question {
   answer: string;
 }
 
+const reactQuestions: Question[] = [
+  {
+    id: 1,
+    question: "What is React?",
+    options: [
+      "A JavaScript library for building user interfaces",
+      "A programming language",
+      "A database management system",
+      "An operating system"
+    ],
+    answer: "A JavaScript library for building user interfaces"
+  },
+  {
+    id: 2,
+    question: "What is JSX?",
+    options: [
+      "A JavaScript extension for XML",
+      "A Java XML parser",
+      "A JSON formatter",
+      "A JavaScript testing framework"
+    ],
+    answer: "A JavaScript extension for XML"
+  },
+  {
+    id: 3,
+    question: "What is a React component?",
+    options: [
+      "A reusable piece of UI",
+      "A database table",
+      "A CSS framework",
+      "A JavaScript variable"
+    ],
+    answer: "A reusable piece of UI"
+  },
+  {
+    id: 4,
+    question: "What is the virtual DOM?",
+    options: [
+      "A lightweight copy of the actual DOM",
+      "A web browser",
+      "A programming language",
+      "A React component"
+    ],
+    answer: "A lightweight copy of the actual DOM"
+  },
+  {
+    id: 5,
+    question: "What hook is used for side effects in React?",
+    options: [
+      "useEffect",
+      "useState",
+      "useContext",
+      "useReducer"
+    ],
+    answer: "useEffect"
+  }
+];
+
 const Quiz = () => {
   const [showQuiz, setShowQuiz] = useState(false);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResults, setShowResults] = useState(false);
-  const [difficulty, setDifficulty] = useState("medium");
   const [showWarning, setShowWarning] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const handleStartQuiz = async (topic: string, selectedDifficulty: string) => {
     setIsLoading(true);
-    setDifficulty(selectedDifficulty.toLowerCase());
     try {
+      if (topic.toLowerCase() === "react") {
+        setQuestions(reactQuestions);
+        setShowQuiz(true);
+        setAnswers({});
+      } else {
       const { data, error } = await supabase.functions.invoke('generate-quiz', {
         body: { topic }
       });
@@ -45,6 +106,7 @@ const Quiz = () => {
       setQuestions(parsedData.questions);
       setShowQuiz(true);
       setAnswers({});
+      }
     } catch (error) {
       console.error('Error generating quiz:', error);
       toast({
